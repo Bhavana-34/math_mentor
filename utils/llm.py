@@ -1,74 +1,101 @@
 import json
-import os
 import re
 from typing import List, Dict, Optional
 
-import config
 
-_client = None
-
-
-def _resolve_secret(key: str) -> str:
-    """Read a secret at runtime: env vars first, then st.secrets (Streamlit Cloud)."""
-    # 1. os.environ is always fresh (Streamlit Cloud injects secrets as env vars)
-    val = os.environ.get(key, "")
-    if val:
-        return val
-    # 2. st.secrets — explicit Streamlit secrets store
+def _st_secret(key: str) -> str:
+    """Safely read one key from st.secrets (Streamlit Cloud secrets store)."""
     try:
         import streamlit as st
-        val = st.secrets.get(key, "")
-        if val:
-            return val
+        # Use direct key access, not .get(), for full compatibility
+        if key in st.secrets:
+            return str(st.secrets[key]).strip()
     except Exception:
         pass
-    # 3. Fall back to whatever config parsed at startup
-    return getattr(config, key, "") or ""
+    return ""
+
+
+def _load_config():
+    import os
+    # 1. Load .env for local development
+    try:
+        from dotenv import load_dotenv
+        from pathlib import Path
+        load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env", override=True)
+    except ImportError:
+        pass
+
+    # 2. os.environ — works locally AND on Streamlit Cloud (secrets are env vars too)
+    def _get(key: str, default: str = "") -> str:
+        return os.environ.get(key, "").strip() or _st_secret(key) or default
+
+    return {
+        "provider":       _get("LLM_PROVIDER", "groq"),
+        "groq_key":       _get("GROQ_API_KEY"),
+        "groq_model":     _get("GROQ_MODEL", "llama-3.3-70b-versatile"),
+        "deepseek_key":   _get("DEEPSEEK_API_KEY"),
+        "deepseek_model": _get("DEEPSEEK_MODEL", "deepseek-chat"),
+    }
+
+
+# Do NOT cache globally — re-create each session so a new secret is picked up
+# after Streamlit Cloud reboots without needing a code push.
+_client = None
+_client_key = None   # track which api_key the current client was built with
 
 
 def get_client():
-    global _client
-    # Re-resolve every call so a newly added secret is picked up without restart
-    provider = _resolve_secret("LLM_PROVIDER") or config.LLM_PROVIDER
+    global _client, _client_key
 
-    # If we already have a client for this provider, reuse it
-    if _client is not None:
-        return _client
+    cfg = _load_config()
+    provider = cfg["provider"]
 
     if provider == "groq":
-        api_key = _resolve_secret("GROQ_API_KEY")
+        api_key = cfg["groq_key"]
         if not api_key:
+            # List available secret keys (no values) to help diagnose typos
+            hint = ""
+            try:
+                import streamlit as st
+                hint = f" (secrets present: {list(st.secrets.keys())})"
+            except Exception:
+                pass
             raise ValueError(
-                "GROQ_API_KEY not set. "
-                "Add it to Streamlit Cloud Secrets (Manage app → Settings → Secrets) "
-                "or to a local .env file. Free key at https://console.groq.com"
+                f"GROQ_API_KEY is not set{hint}.\n"
+                "Fix: Streamlit Cloud → Manage app → Settings → Secrets → add:\n"
+                "  GROQ_API_KEY = \"gsk_...\"\n"
+                "Free key at https://console.groq.com"
             )
-        try:
+        # Rebuild client only when the key actually changes
+        if _client is None or _client_key != api_key:
             from groq import Groq
             _client = Groq(api_key=api_key)
-        except ImportError:
-            raise ImportError("Run: pip install groq")
+            _client_key = api_key
 
     elif provider == "deepseek":
-        api_key = _resolve_secret("DEEPSEEK_API_KEY")
+        api_key = cfg["deepseek_key"]
         if not api_key:
             raise ValueError(
-                "DEEPSEEK_API_KEY not set. "
-                "Add it to Streamlit Cloud Secrets or a local .env file. "
+                "DEEPSEEK_API_KEY is not set.\n"
+                "Fix: Streamlit Cloud → Manage app → Settings → Secrets → add:\n"
+                "  DEEPSEEK_API_KEY = \"sk_...\"\n"
                 "Free key at https://platform.deepseek.com"
             )
-        try:
+        if _client is None or _client_key != api_key:
             from openai import OpenAI
-            _client = OpenAI(
-                api_key=api_key,
-                base_url="https://api.deepseek.com/v1",
-            )
-        except ImportError:
-            raise ImportError("Run: pip install openai")
+            _client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com/v1")
+            _client_key = api_key
     else:
-        raise ValueError(f"Unknown LLM_PROVIDER: {provider}. Use 'groq' or 'deepseek'.")
+        raise ValueError(f"Unknown LLM_PROVIDER '{provider}'. Use 'groq' or 'deepseek'.")
 
     return _client
+
+
+def get_model() -> str:
+    cfg = _load_config()
+    if cfg["provider"] == "groq":
+        return cfg["groq_model"]
+    return cfg["deepseek_model"]
 
 
 def chat_completion(
@@ -79,7 +106,7 @@ def chat_completion(
     response_format: Optional[str] = None,
 ) -> str:
     client = get_client()
-    active_model = model or config.LLM_MODEL
+    active_model = model or get_model()
 
     kwargs = {
         "model": active_model,

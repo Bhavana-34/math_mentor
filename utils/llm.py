@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from typing import List, Dict, Optional
 
@@ -8,23 +9,31 @@ _client = None
 
 
 def _resolve_secret(key: str) -> str:
-    """Read a secret from env, config, or st.secrets (for Streamlit Cloud)."""
-    val = getattr(config, key, "") or ""
+    """Read a secret at runtime: env vars first, then st.secrets (Streamlit Cloud)."""
+    # 1. os.environ is always fresh (Streamlit Cloud injects secrets as env vars)
+    val = os.environ.get(key, "")
     if val:
         return val
+    # 2. st.secrets — explicit Streamlit secrets store
     try:
         import streamlit as st
-        return st.secrets.get(key, "")
+        val = st.secrets.get(key, "")
+        if val:
+            return val
     except Exception:
-        return ""
+        pass
+    # 3. Fall back to whatever config parsed at startup
+    return getattr(config, key, "") or ""
 
 
 def get_client():
     global _client
+    # Re-resolve every call so a newly added secret is picked up without restart
+    provider = _resolve_secret("LLM_PROVIDER") or config.LLM_PROVIDER
+
+    # If we already have a client for this provider, reuse it
     if _client is not None:
         return _client
-
-    provider = _resolve_secret("LLM_PROVIDER") or config.LLM_PROVIDER
 
     if provider == "groq":
         api_key = _resolve_secret("GROQ_API_KEY")

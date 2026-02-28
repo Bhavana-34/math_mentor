@@ -1,0 +1,107 @@
+JEE MATH SOLUTION STRATEGIES AND TEMPLATES
+
+GENERAL PROBLEM-SOLVING FRAMEWORK
+1. Read carefully - identify what is GIVEN and what is ASKED
+2. Identify the topic/domain (algebra, calculus, probability, etc.)
+3. Recall relevant formulas for that topic
+4. Plan solution steps BEFORE computing
+5. Execute calculations step by step showing all work
+6. VERIFY the answer (domain, sign, units, reasonableness)
+
+ALGEBRA TEMPLATES
+
+Template A: Quadratic Problems
+Given: equation or conditions on roots
+Step 1: Write as ax^2 + bx + c = 0
+Step 2: Compute D = b^2 - 4ac, check nature of roots
+Step 3: Use Vieta's if sum/product of roots needed
+Step 4: Use quadratic formula for exact roots
+
+Template B: Sequence and Series
+Given: AP or GP sequence
+Step 1: Identify type - check constant differences (AP) or ratios (GP)
+Step 2: Extract first term and common difference/ratio
+Step 3: Apply nth term or sum formula
+
+Template C: Inequalities
+Step 1: Move everything to one side
+Step 2: Find critical points (zeros of numerator and denominator)
+Step 3: Test intervals using sign chart
+Step 4: State solution with correct brackets
+
+PROBABILITY TEMPLATES
+
+Template A: Basic Counting
+Step 1: Define sample space clearly and count total outcomes
+Step 2: List favorable outcomes systematically (use combinations)
+Step 3: P = favorable / total
+Step 4: Check answer is between 0 and 1
+
+Template B: Conditional Probability
+Step 1: Identify the conditioning event
+Step 2: Reduce sample space to that event
+Step 3: Count favorable within reduced space
+Step 4: Compute ratio
+
+Template C: Bayes Theorem
+Step 1: Identify all mutually exclusive hypotheses
+Step 2: Write prior probabilities P(Hi)
+Step 3: Write likelihoods P(Evidence | Hi) for each
+Step 4: Apply Bayes formula
+Step 5: Verify posteriors sum to 1
+
+CALCULUS TEMPLATES
+
+Template A: Limit Evaluation
+Step 1: Try direct substitution first
+Step 2: If 0/0: try factoring, rationalizing, or standard limits
+Step 3: If still stuck: apply L'Hopital's rule
+Step 4: Check if one-sided limits differ
+
+Template B: Optimization
+Step 1: Define variables and objective function
+Step 2: Express in one variable using constraint
+Step 3: Differentiate, set f'(x) = 0
+Step 4: Second derivative test for max/min
+Step 5: Check boundary conditions
+Step 6: State answer in context of problem
+
+Template C: Integration
+Step 1: Identify technique (direct, substitution, by parts)
+Step 2: For substitution: choose u, find du
+Step 3: Transform integral entirely in u
+Step 4: Integrate and back-substitute
+Step 5: For definite integral: apply limits after
+
+LINEAR ALGEBRA TEMPLATES
+
+Template A: Solving System Ax = b
+Step 1: Write augmented matrix [A|b]
+Step 2: Row reduce to echelon form
+Step 3: Check consistency (rank conditions)
+Step 4: Back-substitute for solution
+
+Template B: Finding Eigenvalues/Eigenvectors
+Step 1: Set up det(A - lambda*I) = 0
+Step 2: Expand and solve characteristic polynomial
+Step 3: For each lambda, solve (A - lambda*I)v = 0
+Step 4: Express eigenvector as free parameter
+
+VERIFICATION CHECKLIST
+After solving, always verify:
+[ ] Probability: 0 <= P <= 1
+[ ] Log: argument is positive
+[ ] Square root: result is non-negative
+[ ] Division: denominator != 0
+[ ] Optimization: it's truly a max/min (second derivative test)
+[ ] Quadratic: check roots satisfy original equation
+[ ] Matrix inverse: det != 0
+
+COMMON JEE TRICK QUESTION PATTERNS
+1. Probability > 1 trap: always verify final P is valid
+2. Determinant = 0 trap: check before using Cramer's rule
+3. Log domain trap: argument must be strictly positive
+4. Square root trap: sqrt(x^2) = |x|, not just x
+5. Division by variable: consider case when variable = 0
+6. Infinite GP: valid only when |r| < 1
+7. AP/GP confusion: always verify constant difference vs ratio

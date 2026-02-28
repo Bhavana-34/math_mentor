@@ -1,0 +1,60 @@
+ALGEBRA FORMULAS AND IDENTITIES
+
+1. QUADRATIC FORMULA
+For ax^2 + bx + c = 0:
+x = (-b +/- sqrt(b^2 - 4ac)) / 2a
+Discriminant D = b^2 - 4ac
+- D > 0: two distinct real roots
+- D = 0: one repeated real root
+- D < 0: two complex conjugate roots
+
+Vieta's formulas: sum of roots = -b/a, product of roots = c/a
+
+2. ALGEBRAIC IDENTITIES
+(a+b)^2 = a^2 + 2ab + b^2
+(a-b)^2 = a^2 - 2ab + b^2
+(a+b)(a-b) = a^2 - b^2
+(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3
+(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3
+a^3 + b^3 = (a+b)(a^2 - ab + b^2)
+a^3 - b^3 = (a-b)(a^2 + ab + b^2)
+
+3. ARITHMETIC PROGRESSION (AP)
+nth term: a_n = a + (n-1)d
+Sum of n terms: S_n = n/2 * (2a + (n-1)d) = n/2 * (a + l)
+where a = first term, d = common difference, l = last term
+
+4. GEOMETRIC PROGRESSION (GP)
+nth term: a_n = a * r^(n-1)
+Sum of n terms: S_n = a(r^n - 1)/(r - 1) for r != 1
+Sum to infinity: S_inf = a/(1-r) for |r| < 1
+
+5. INEQUALITIES
+AM >= GM: (a+b)/2 >= sqrt(ab) for a,b > 0
+AM-GM-HM inequality: AM >= GM >= HM
+
+6. LOGARITHMS
+log_a(xy) = log_a(x) + log_a(y)
+log_a(x/y) = log_a(x) - log_a(y)
+log_a(x^n) = n * log_a(x)
+Change of base: log_a(x) = log_b(x) / log_b(a)
+log_a(1) = 0, log_a(a) = 1
+
+7. BINOMIAL THEOREM
+(a+b)^n = sum_{k=0}^{n} C(n,k) * a^(n-k) * b^k
+C(n,k) = n! / (k! * (n-k)!)
+General term: T_{r+1} = C(n,r) * a^(n-r) * b^r
+Middle term: if n even, middle term is T_{n/2+1}
+
+8. COMPLEX NUMBERS
+i^2 = -1, i^3 = -i, i^4 = 1
+|z| = sqrt(a^2 + b^2) for z = a + ib
+Conjugate: z* = a - ib
+z * z* = |z|^2
+
+COMMON MISTAKES IN ALGEBRA
+- Forgetting +/- when taking square roots
+- Sign errors when expanding (a-b)^2
+- Division by zero when simplifying expressions
+- Not checking if discriminant conditions hold
+- Confusing log base rules

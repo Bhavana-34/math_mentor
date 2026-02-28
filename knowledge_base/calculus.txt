@@ -1,0 +1,82 @@
+CALCULUS - LIMITS, DERIVATIVES, INTEGRATION, OPTIMIZATION
+
+1. STANDARD LIMITS
+lim_{x->0} sin(x)/x = 1
+lim_{x->0} tan(x)/x = 1
+lim_{x->0} (1 - cos(x))/x = 0
+lim_{x->0} (1 - cos(x))/x^2 = 1/2
+lim_{x->0} (e^x - 1)/x = 1
+lim_{x->0} (a^x - 1)/x = ln(a)
+lim_{x->0} ln(1+x)/x = 1
+lim_{x->inf} (1 + 1/x)^x = e
+lim_{x->0} (1 + x)^(1/x) = e
+
+2. L'HOPITAL'S RULE
+If limit gives 0/0 or inf/inf form:
+lim f(x)/g(x) = lim f'(x)/g'(x)
+Apply repeatedly if still indeterminate.
+
+3. DERIVATIVES - BASIC RULES
+d/dx(x^n) = n * x^(n-1)
+d/dx(e^x) = e^x
+d/dx(a^x) = a^x * ln(a)
+d/dx(ln x) = 1/x
+d/dx(log_a x) = 1/(x * ln a)
+d/dx(sin x) = cos x
+d/dx(cos x) = -sin x
+d/dx(tan x) = sec^2(x)
+d/dx(cot x) = -csc^2(x)
+d/dx(sec x) = sec(x)*tan(x)
+d/dx(csc x) = -csc(x)*cot(x)
+
+4. DERIVATIVE RULES
+Product rule: (uv)' = u'v + uv'
+Quotient rule: (u/v)' = (u'v - uv') / v^2
+Chain rule: d/dx f(g(x)) = f'(g(x)) * g'(x)
+
+5. OPTIMIZATION
+Steps:
+1. Define variable and objective function f(x)
+2. Express in terms of one variable using constraints
+3. Find f'(x) = 0 to get critical points
+4. Second derivative test: f''(x) < 0 -> local max, f''(x) > 0 -> local min
+5. Check boundary values
+6. Compare all values for global extrema
+
+6. INTEGRATION - STANDARD FORMS
+integral x^n dx = x^(n+1)/(n+1) + C   (n != -1)
+integral 1/x dx = ln|x| + C
+integral e^x dx = e^x + C
+integral a^x dx = a^x/ln(a) + C
+integral sin(x) dx = -cos(x) + C
+integral cos(x) dx = sin(x) + C
+integral sec^2(x) dx = tan(x) + C
+
+Fundamental Theorem: integral_a^b f(x)dx = F(b) - F(a)
+
+7. INTEGRATION TECHNIQUES
+Substitution: let u = g(x), then du = g'(x)dx
+By parts: integral u dv = uv - integral v du
+
+SOLUTION TEMPLATES
+
+Template - Evaluating Limits:
+1. Try direct substitution
+2. If 0/0: factor and cancel, or rationalize, or L'Hopital
+3. If inf/inf: divide by highest power, or L'Hopital
+4. Check one-sided limits if needed
+
+Template - Optimization Word Problem:
+1. Assign variables, write objective function
+2. Write constraint equation
+3. Substitute constraint into objective (one variable only)
+4. Differentiate, set = 0, solve
+5. Verify with second derivative test
+6. Answer the question in context
+
+COMMON MISTAKES IN CALCULUS
+- Forgetting chain rule in composite functions
+- Not checking endpoints in closed-interval optimization
+- Applying L'Hopital when form is NOT 0/0 or inf/inf
+- Sign errors in integration
+- Forgetting absolute value in ln|x|

@@ -1,0 +1,69 @@
+PROBABILITY FORMULAS AND CONCEPTS
+
+1. BASIC PROBABILITY
+P(A) = favorable outcomes / total outcomes
+0 <= P(A) <= 1
+P(A') = 1 - P(A)  [complement rule]
+
+2. ADDITION RULE
+P(A union B) = P(A) + P(B) - P(A intersection B)
+For mutually exclusive events: P(A union B) = P(A) + P(B)
+
+3. MULTIPLICATION RULE
+P(A intersection B) = P(A) * P(B|A) = P(B) * P(A|B)
+For independent events: P(A intersection B) = P(A) * P(B)
+
+4. CONDITIONAL PROBABILITY
+P(A|B) = P(A intersection B) / P(B),  where P(B) != 0
+
+5. BAYES THEOREM
+P(A|B) = P(B|A) * P(A) / P(B)
+P(B) = P(B|A)*P(A) + P(B|A')*P(A')  [total probability]
+
+6. COMBINATORICS
+Permutation (order matters): P(n,r) = n! / (n-r)!
+Combination (order doesn't matter): C(n,r) = n! / (r! * (n-r)!)
+With repetition: n^r arrangements
+
+7. BINOMIAL DISTRIBUTION
+P(X=k) = C(n,k) * p^k * (1-p)^(n-k)
+Mean = np
+Variance = np(1-p)
+Standard deviation = sqrt(np(1-p))
+
+8. GEOMETRIC DISTRIBUTION
+P(X=k) = (1-p)^(k-1) * p   [first success on kth trial]
+Mean = 1/p
+
+9. EXPECTED VALUE AND VARIANCE
+E(X) = sum of x * P(X=x)
+E(aX + b) = aE(X) + b
+Var(X) = E(X^2) - [E(X)]^2
+Var(aX + b) = a^2 * Var(X)
+
+SOLUTION TEMPLATES FOR PROBABILITY
+
+Template A - Counting Problems:
+1. Identify total sample space size
+2. Count favorable outcomes systematically
+3. Apply combinations or permutations
+4. Compute ratio = favorable / total
+
+Template B - Conditional Probability:
+1. Identify the given condition
+2. Reduce sample space to satisfy condition
+3. Count favorable outcomes in reduced space
+4. Compute P = favorable / reduced total
+
+Template C - Bayes Problems:
+1. List all hypotheses H1, H2, ...
+2. Find prior probabilities P(Hi)
+3. Find likelihoods P(E|Hi)
+4. Apply Bayes: P(Hi|E) = P(E|Hi)*P(Hi) / sum[P(E|Hj)*P(Hj)]
+
+COMMON MISTAKES IN PROBABILITY
+- Confusing permutation with combination
+- Not checking independence before multiplying
+- Forgetting complement rule shortcut
+- Double counting in union problems
+- Forgetting to reduce sample space in conditional problems
